@@ -12,7 +12,6 @@ namespace TaskTracker.API.Data
     {
         public DataContext(DbContextOptions<DataContext>  options) : base (options) {}
         public DbSet<ClientTask> ClientTasks { get; set; }
-        public DbSet<UserClientTask> UserClientTasks { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -28,21 +27,6 @@ namespace TaskTracker.API.Data
 
                 userRole.HasOne(ur => ur.User)
                     .WithMany(r => r.UserRoles)
-                    .HasForeignKey(ur => ur.UserId)
-                    .IsRequired();
-            });
-
-            builder.Entity<UserClientTask>(userClientTask => 
-            {
-                userClientTask.HasKey(uc => new {uc.UserId, uc.ClientTaskId});
-
-                userClientTask.HasOne(uc => uc.ClientTask)
-                    .WithMany(c => c.UserClientTasks)
-                    .HasForeignKey(ur => ur.ClientTaskId)
-                    .IsRequired();
-
-                userClientTask.HasOne(uc => uc.User)
-                    .WithMany(r => r.UserClientTasks)
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });

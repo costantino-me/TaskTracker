@@ -25,31 +25,35 @@ namespace TaskTracker.API.Data
             _context.Remove(entity);
         }
 
-        public Task<ClientTask> GetClientTask(int clientTaskId)
+        public async Task<ClientTask> GetClientTask(int clientTaskId)
         {
-            throw new NotImplementedException();
+            var query = _context.ClientTasks.AsQueryable();
+
+            var user = await query.FirstOrDefaultAsync(t => t.Id == clientTaskId);
+
+            return user;
         }
 
-        public Task<IEnumerable<ClientTask>> GetClientTasks(int userId)
+        public async Task<IEnumerable<ClientTask>> GetClientTasks()
         {
-            throw new NotImplementedException();
+            var clientTasks = _context.ClientTasks;
+            return clientTasks;
         }
 
-        public async Task<User> GetUser(int id, bool isCurrentUser)
+        public async Task<User> GetUser(int id)
         {
-            var query = _context.Users.AsQueryable();
-
-            if (isCurrentUser)
-                query = query.IgnoreQueryFilters();
+            var query = _context.Users.Include(u => u.ClientTasks).AsQueryable();
 
             var user = await query.FirstOrDefaultAsync(u => u.Id == id);
 
             return user;
         }
 
-        public Task<IEnumerable<User>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers()
         {
-            throw new NotImplementedException();
+            var users = _context.Users.Include(u => u.ClientTasks).AsQueryable();
+
+            return users;
         }
 
         public async Task<bool> SaveAll()

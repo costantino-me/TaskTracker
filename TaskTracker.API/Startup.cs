@@ -131,6 +131,7 @@ namespace TaskTracker.API
             app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseMvc();
         }
     }
 }

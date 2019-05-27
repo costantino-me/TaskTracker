@@ -9,7 +9,10 @@ namespace TaskTracker.API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<User, UserForDetailedDto>();
             CreateMap<UserForRegisterDto, User>();
+            CreateMap<ClientTaskForAddDto, ClientTask>();
+            CreateMap<ClientTask, ClientTaskForDetailedDto>();
         }
     }
 }

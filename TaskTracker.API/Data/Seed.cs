@@ -49,7 +49,7 @@ namespace TaskTracker.API.Data
                     UserName = "Admin"
                 };
 
-                IdentityResult result = _userManager.CreateAsync(adminUser, "55OFq0xZKBI4sSf*8B89").Result;
+                IdentityResult result = _userManager.CreateAsync(adminUser, "password").Result;
 
                 if (result.Succeeded)
                 {

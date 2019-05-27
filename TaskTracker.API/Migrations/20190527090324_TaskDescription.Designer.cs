@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskTracker.API.Data;
 
 namespace TaskTracker.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190527090324_TaskDescription")]
+    partial class TaskDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,6 +92,8 @@ namespace TaskTracker.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Address");
+
                     b.Property<DateTime>("Created");
 
                     b.Property<string>("Description");
@@ -100,11 +104,7 @@ namespace TaskTracker.API.Migrations
 
                     b.Property<DateTime>("StartTime");
 
-                    b.Property<int>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("ClientTasks");
                 });
@@ -139,7 +139,7 @@ namespace TaskTracker.API.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("City");
+                    b.Property<string>("Address");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -151,9 +151,7 @@ namespace TaskTracker.API.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
+                    b.Property<string>("KnownAs");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -173,8 +171,6 @@ namespace TaskTracker.API.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<string>("StreetAddress");
-
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
@@ -190,6 +186,19 @@ namespace TaskTracker.API.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("TaskTracker.API.Models.UserClientTask", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("ClientTaskId");
+
+                    b.HasKey("UserId", "ClientTaskId");
+
+                    b.HasIndex("ClientTaskId");
+
+                    b.ToTable("UserClientTasks");
                 });
 
             modelBuilder.Entity("TaskTracker.API.Models.UserRole", b =>
@@ -237,10 +246,15 @@ namespace TaskTracker.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TaskTracker.API.Models.ClientTask", b =>
+            modelBuilder.Entity("TaskTracker.API.Models.UserClientTask", b =>
                 {
+                    b.HasOne("TaskTracker.API.Models.ClientTask", "ClientTask")
+                        .WithMany("UserClientTasks")
+                        .HasForeignKey("ClientTaskId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("TaskTracker.API.Models.User", "User")
-                        .WithMany("ClientTasks")
+                        .WithMany("UserClientTasks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

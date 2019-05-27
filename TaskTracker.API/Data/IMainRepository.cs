@@ -12,8 +12,8 @@ namespace TaskTracker.API.Data
          void Delete<T>(T entity) where T: class;
          Task<bool> SaveAll();
          Task<IEnumerable<User>> GetUsers();
-         Task<User> GetUser(int id, bool isCurrentUser);
+         Task<User> GetUser(int id);
          Task<ClientTask> GetClientTask(int clientTaskId);
-         Task<IEnumerable<ClientTask>> GetClientTasks(int userId);         
+         Task<IEnumerable<ClientTask>> GetClientTasks();      
     }
 }
