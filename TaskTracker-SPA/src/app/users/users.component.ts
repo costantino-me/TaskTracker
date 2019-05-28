@@ -73,7 +73,7 @@ export class UsersComponent implements OnInit {
 
   filterTasks() {
     if (this.selectedUser.id) {
-      this.filteredTasks = this.tasks.filter(t => t.clientId === this.selectedUser.id);
+      this.filteredTasks = this.tasks.filter(t => t.userId === this.selectedUser.id);
     } else {
       this.filteredTasks = this.tasks;
     }
@@ -87,7 +87,7 @@ export class UsersComponent implements OnInit {
       this.filteredUsers = this.users.filter(u => u.lastName === this.name);
       this.selectedUser = this.filteredUsers[0];
     } else {
-      this.filteredTasks = this.tasks;
+      this.filteredUsers = this.users;
     }
   }
 
@@ -101,7 +101,7 @@ export class UsersComponent implements OnInit {
   }
 
   addTask() {
-    this.newTask.clientId = this.selectedUser.id;
+    this.newTask.userId = this.selectedUser.id;
     this.userService.addTask(this.newTask).subscribe(next => {
       this.alertify.success('Task added successfully');
       this.ngOnInit();

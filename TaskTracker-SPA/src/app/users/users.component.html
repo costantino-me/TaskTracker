@@ -86,17 +86,20 @@
                   <table style="width:100%">
                     <tr>
                       <th>Task Name</th>
+                      <th>Address</th>
                       <th>Task Description</th> 
                       <th>Start</th>
                       <th>End</th>
                       <th>Actions</th>
                     </tr>
                   <tr *ngFor="let task of filteredTasks">                
-                    <td>{{task.name}}</td>                
+                    <td>{{task.name}}</td>    
+                    <td>{{selectedUser.streetAddress}}</td>            
                     <td>{{task.description}}</td>                
                     <td>{{task.startTime | date}}</td>                
                     <td>{{task.endTime | date}}</td>
-                    <td><button (click)="deleteTask($event, task.id)" class="btn btn-danger" style="margin-left:10px">Delete</button></td>
+                    <td><button (click)="deleteTask($event, task.id)" class="btn btn-danger" style="margin-left:10px">Delete</button>
+                    <button class="btn btn-info" style="margin-left:10px">Update</button></td>
                   </tr>
                 </table>
                 </div>

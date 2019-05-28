@@ -4,7 +4,7 @@ namespace TaskTracker.API.Dtos
 {
     public class ClientTaskForAddDto
     {
-        public int ClientId { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Created { get; set; }

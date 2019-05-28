@@ -49,7 +49,7 @@ namespace TaskTracker.API.Controllers
         public async Task<IActionResult> AddClientTask([FromBody] ClientTaskForAddDto clientTaskForAddDto)
         {
             var clientTaskToAdd = _mapper.Map<ClientTask>(clientTaskForAddDto);
-            var userFromRepo = await _repo.GetUser(clientTaskForAddDto.ClientId);
+            var userFromRepo = await _repo.GetUser(clientTaskForAddDto.UserId);
             userFromRepo.ClientTasks.Add(clientTaskToAdd);
 
             if (await _repo.SaveAll())
