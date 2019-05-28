@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="text-center mt-3">
+          <h2>Users:</h2>
+      </div>
+        
+      <div class="container mt-3">
+        
+          <form class="form-inline" #form="ngForm" (ngSubmit)="filterUsers()" novalidate>
+      
+              <div class="form-group">
+                  <label for="city">City</label>
+                  <input type="text" class="form-control ml-1" style="width: 70px" id="city"
+                    [(ngModel)]="city" name="city">
+                </div>
+              <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control ml-1" style="width: 70px" id="name"
+                    [(ngModel)]="name" name="name">
+                </div>
+              <div class="form-group px-2">
+                  <label for="filterType">Filter by </label>
+                  <select class="form-control ml-1" style="width: 130px" id="filterType"
+                    [(ngModel)]="filterType" name="filterType">
+                    <option value="city" selected> by city </option>
+                    <option value="name"> by last name </option>
+                  </select>
+                </div>
+              <button (click)="filterUsers($event)" class="btn btn-primary" style="margin-left:10px">Apply Filter</button>
+              <button type="button" class="btn btn-info" (click)="resetFilters()" style="margin-left:10px">
+                  Reset Filter
+              </button>
+            </form>
+          <br>
+        <div class="row">
+          <table style="width:100%">
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th> 
+              <th>City</th>
+              <th>Street Address</th>
+              <th>Phone Number</th>
+              <th>Actions</th>
+            </tr>
+          <tr *ngFor="let user of filteredUsers">                
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.city}}</td>
+            <td>{{user.streetAddress}}</td>
+            <td>{{user.phoneNumber}}</td>
+            <td><button class="btn btn-info" style="margin-left:10px" (click)="selectUser($event, user.id)">Tasks</button></td>
+          </tr>
+        </table>
+        </div>
+      </div>
+  </div>
+  <div class="col-md-6 col-lg-6 col-sm-6">
+      <div class="row">
+          <div class="col-md-11 col-lg-11 col-sm-11">
+              <div class="text-center mt-3">
+                  <h2>Tasks:</h2>
+              </div>
+                
+              <div class="container mt-3">
+                
+                <form class="form-inline" #form="ngForm" (ngSubmit)="loadTasks()" novalidate>
+                    <label>Showing {{selectedUser.firstName}}'s tasks</label>
+                    <button (click)="toggleAddTask()" type="submit" class="btn btn-primary" style="margin-left:10px">Add Task to {{selectedUser.firstName}}</button>
+                </form>
+                <div *ngIf="addTaskToggle" class="container mt-5">
+                    <h3>Add the task:</h3>
+                    <form #taskForm="ngForm" id="taskForm" (ngSubmit)="addTask()">
+                          Name<br>
+                          <input type="text" form="taskForm" class="form-control" name="name" value="name" [(ngModel)]="newTask.name">
+                          Description<br>
+                          <input type="text" form="taskForm" class="form-control" name="description" value="blah - blah" [(ngModel)]="newTask.description"> 
+                          Start <br>
+                          <input type="date" form="taskForm" class="form-control" name="startTime" [(ngModel)]="newTask.startTime">
+                          End <br>
+                          <input type="date" form="taskForm" class="form-control" name="endTime" [(ngModel)]="newTask.endTime">
+                          <button [disabled]="!taskForm.dirty" form="taskForm" class="btn btn-success btn-block">Submit</button>
+                    </form>
+                </div>
+                  <br>
+                <div class="row">
+                  <table style="width:100%">
+                    <tr>
+                      <th>Task Name</th>
+                      <th>Task Description</th> 
+                      <th>Start</th>
+                      <th>End</th>
+                      <th>Actions</th>
+                    </tr>
+                  <tr *ngFor="let task of filteredTasks">                
+                    <td>{{task.name}}</td>                
+                    <td>{{task.description}}</td>                
+                    <td>{{task.startTime | date}}</td>                
+                    <td>{{task.endTime | date}}</td>
+                    <td><button (click)="deleteTask($event, task.id)" class="btn btn-danger" style="margin-left:10px">Delete</button></td>
+                  </tr>
+                </table>
+                </div>
+              </div>
+          </div>
+       
+        </div>
+        
+  </div>
+</div>

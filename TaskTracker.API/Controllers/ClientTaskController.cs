@@ -46,7 +46,7 @@ namespace TaskTracker.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddClientTask([FromForm] ClientTaskForAddDto clientTaskForAddDto)
+        public async Task<IActionResult> AddClientTask([FromBody] ClientTaskForAddDto clientTaskForAddDto)
         {
             var clientTaskToAdd = _mapper.Map<ClientTask>(clientTaskForAddDto);
             var userFromRepo = await _repo.GetUser(clientTaskForAddDto.ClientId);
